@@ -6,11 +6,11 @@ import Meals from './components/Meals/Meals';
 function App() {
   return (
     <div className="App">
+      <Cart />
       <Header />
       <main>
         <Meals />
       </main>
-      <Cart />
     </div>
   );
 }
