@@ -16,7 +16,7 @@ const cartReducer = (state, action) => {
       const updatedTotalAmount = state.totalAmount + item.price * item.amount;
       return {
         items: updatedItems,
-        totalAmount: 0,
+        totalAmount: updatedTotalAmount,
       };
     case 'REMOVE':
       throw new Error('Remove item not completed');
