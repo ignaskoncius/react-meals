@@ -2,11 +2,12 @@ import classes from './Cart.module.css';
 import Modal from './../UI/Modal';
 import CartContext from './../../store/cart-context';
 import { useContext } from 'react';
+import CartItem from './CartItem';
 
 const Cart = ({ onCloseCart }) => {
   const cartContext = useContext(CartContext);
   const cartItems = cartContext.items.map((item) => (
-    <li key={item.id}>{item.name}</li>
+    <CartItem item={item} key={item.id} />
   ));
 
   const totalAmount = `$${cartContext.totalAmount.toFixed(2)}`;

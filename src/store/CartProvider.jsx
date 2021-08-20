@@ -10,10 +10,18 @@ const cartReducer = (state, action) => {
   // arba if arba switch
   switch (action.type) {
     case 'ADD':
+      // console.log(state.items);
+      console.log(action.item);
+      const isItemInCart = state.items.filter((item) => {
+        if (item.id === action.item.id) {
+          state.totalAmount++;
+        }
+      });
       // visa pridejimo i krepseli logika ir grazinti nauja state versija
       const { item } = action;
       const updatedItems = [...state.items, item];
       const updatedTotalAmount = state.totalAmount + item.price * item.amount;
+      console.log(updatedItems);
       return {
         items: updatedItems,
         totalAmount: updatedTotalAmount,
