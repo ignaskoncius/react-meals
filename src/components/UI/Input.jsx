@@ -1,10 +1,10 @@
 import classes from './Input.module.css';
 
-const Input = ({ label, input }) => {
+const Input = ({ label, input, value, onChange }) => {
   return (
     <div className={classes.input}>
       <label htmlFor={input.id}>{label}</label>
-      <input {...input} />
+      <input value={value} onChange={onChange} {...input} />
     </div>
   );
 };

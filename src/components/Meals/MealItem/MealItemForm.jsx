@@ -1,10 +1,24 @@
+import React, { useState } from 'react';
+
 import Input from '../../UI/Input';
 import classes from './MealItemForm.module.css';
 
 const MealItemForm = (props) => {
+  const [formQuantity, setFormQuantity] = useState(1);
+
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
+  };
+
+  const inputValueHandler = (event) => {
+    setFormQuantity(event.target.value);
+  };
+
   return (
-    <form className={classes.form}>
+    <form onSubmit={formSubmitHandler} className={classes.form}>
       <Input
+        onChange={inputValueHandler}
+        value={formQuantity}
         label="Amount"
         input={{
           id: 'amount_' + props.id,
@@ -12,7 +26,6 @@ const MealItemForm = (props) => {
           min: 1,
           max: 5,
           step: 1,
-          defaultValue: 1,
         }}
       />
       <button>+ Add</button>
