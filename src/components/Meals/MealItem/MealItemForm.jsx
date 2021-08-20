@@ -1,13 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Input from '../../UI/Input';
 import classes from './MealItemForm.module.css';
-import CartContext from './../../../store/cart-context';
 
 const MealItemForm = (props) => {
   const [formQuantity, setFormQuantity] = useState('1');
   const [amountIsValid, setAmountIsValid] = useState(true);
-
-  const cartContext = useContext(CartContext);
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
@@ -18,12 +15,7 @@ const MealItemForm = (props) => {
       +formQuantity > 5
     )
       return setAmountIsValid(false);
-    cartContext.addItem({
-      id: 'm1',
-      name: 'Sushi',
-      amount: 2,
-      price: 22.99,
-    });
+    props.onAddItem(formQuantity);
   };
 
   const inputValueHandler = (event) => {
