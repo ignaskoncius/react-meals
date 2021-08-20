@@ -7,7 +7,22 @@ const defaultCartState = {
 };
 
 const cartReducer = (state, action) => {
-  return defaultCartState;
+  // arba if arba switch
+  switch (action.type) {
+    case 'ADD':
+      // visa pridejimo i krepseli logika ir grazinti nauja state versija
+      const { item } = action;
+      const updatedItems = [...state.items, item];
+      const updatedTotalAmount = state.totalAmount + item.price * item.amount;
+      return {
+        items: updatedItems,
+        totalAmount: 0,
+      };
+    case 'REMOVE':
+      throw new Error('Remove item not completed');
+    default:
+      return state;
+  }
 };
 
 const CartProvider = (props) => {
@@ -16,8 +31,12 @@ const CartProvider = (props) => {
     defaultCartState
   );
 
-  const addItemToCartHandler = (item) => {};
-  const removeItemFromCartHandler = (id) => {};
+  const addItemToCartHandler = (item) => {
+    dispatchCartAction({ type: 'ADD', item: item });
+  };
+  const removeItemFromCartHandler = (id) => {
+    dispatchCartAction({ type: 'REMOVE', id: id });
+  };
 
   const cartContext = {
     items: cartState.items,
