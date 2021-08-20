@@ -8,18 +8,23 @@ const Cart = ({ onCloseCart }) => {
   const cartItems = cartContext.items.map((item) => (
     <li key={item.id}>{item.name}</li>
   ));
+
+  const totalAmount = `$${cartContext.totalAmount.toFixed(2)}`;
+
+  const cartHasItems = cartContext.items.length > 0;
+
   return (
     <Modal onCloseCart={onCloseCart}>
       <ul className={classes['cart-items']}>{cartItems}</ul>
       <div className={classes.total}>
         <span>Total amount</span>
-        <span>${cartContext.totalAmount.toFixed(2)}</span>
+        <span>{totalAmount}</span>
       </div>
       <div className={classes.actions}>
         <button onClick={onCloseCart} className={classes['button--alt']}>
           Close
         </button>
-        <button className={classes['button']}>Order</button>
+        {cartHasItems && <button className={classes['button']}>Order</button>}
       </div>
     </Modal>
   );
