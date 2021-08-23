@@ -6,8 +6,22 @@ import CartItem from './CartItem';
 
 const Cart = ({ onCloseCart }) => {
   const cartContext = useContext(CartContext);
+
+  const cartItemAddHandler = (item) => {
+    console.log('adding item now', item);
+  };
+  const cartItemRemoveHandler = (id) => {
+    console.log('removing item now', id);
+  };
+
   const cartItems = cartContext.items.map((item) => (
-    <CartItem key={item.id} {...item} />
+    <CartItem
+      key={item.id}
+      // budas prideti funkcijai argumenta kai jo paprastai negalim prideti - .bind()
+      onAddItem={cartItemAddHandler.bind(null, item)}
+      onRemoveItem={cartItemRemoveHandler.bind(null, item.id)}
+      {...item}
+    />
   ));
 
   const totalAmount = `$${cartContext.totalAmount.toFixed(2)}`;
