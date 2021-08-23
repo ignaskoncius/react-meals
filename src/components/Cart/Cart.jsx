@@ -7,7 +7,7 @@ import CartItem from './CartItem';
 const Cart = ({ onCloseCart }) => {
   const cartContext = useContext(CartContext);
   const cartItems = cartContext.items.map((item) => (
-    <CartItem item={item} key={item.id} />
+    <CartItem key={item.id} {...item} />
   ));
 
   const totalAmount = `$${cartContext.totalAmount.toFixed(2)}`;
