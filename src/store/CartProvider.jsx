@@ -9,25 +9,58 @@ const defaultCartState = {
 const cartReducer = (state, action) => {
   // arba if arba switch
   switch (action.type) {
-    case 'ADD':
-      // console.log(state.items);
-      console.log(action.item);
-      const isItemInCart = state.items.filter((item) => {
-        if (item.id === action.item.id) {
-          state.totalAmount++;
-        }
-      });
-      // visa pridejimo i krepseli logika ir grazinti nauja state versija
+    case 'ADD': {
+      // visa pridejimo i krepseli logika ir grazinti nauja sate versija
+      // 2 keliai
       const { item } = action;
-      const updatedItems = [...state.items, item];
       const updatedTotalAmount = state.totalAmount + item.price * item.amount;
-      console.log(updatedItems);
+      //// 1a itemas jau yra krepselyje mes norim padinti jo kiieki ir totalAmount
+      const existingCartItemIndex = state.items.findIndex(
+        (cartItem) => cartItem.id === item.id
+      );
+      const existingCartItem = state.items[existingCartItemIndex];
+
+      let updatedItems;
+      if (existingCartItem) {
+        const updatedItem = {
+          ...existingCartItem,
+          amount: existingCartItem.amount + item.amount,
+        };
+        updatedItems = [...state.items];
+        updatedItems[existingCartItemIndex] = updatedItem;
+      } else {
+        //// 2a itemo nera krepsely mes ji idedam
+        updatedItems = [...state.items, item];
+      }
+
       return {
         items: updatedItems,
         totalAmount: updatedTotalAmount,
       };
+    }
     case 'REMOVE':
-      throw new Error('Remove item not completed');
+      const existingCartItem = state.items.find(
+        (cartItem) => cartItem.id === action.id
+      );
+
+      let updatedItems;
+      const updatedTotalAmount = state.totalAmount - existingCartItem.price;
+
+      if (existingCartItem.amount > 1) {
+        updatedItems = state.items.map((cartItem) => {
+          if (cartItem.id === action.id)
+            return { ...cartItem, amount: cartItem.amount - 1 };
+          return cartItem;
+        });
+      } else if (existingCartItem.amount === 1) {
+        updatedItems = state.items.filter(
+          (cartItem) => cartItem.id !== action.id
+        );
+      }
+      return {
+        items: updatedItems,
+        totalAmount: updatedTotalAmount,
+      };
     default:
       return state;
   }

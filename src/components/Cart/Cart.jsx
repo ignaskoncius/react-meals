@@ -9,9 +9,11 @@ const Cart = ({ onCloseCart }) => {
 
   const cartItemAddHandler = (item) => {
     console.log('adding item now', item);
+    cartContext.addItem({ ...item, amount: 1 });
   };
   const cartItemRemoveHandler = (id) => {
     console.log('removing item now', id);
+    cartContext.removeItem(id);
   };
 
   const cartItems = cartContext.items.map((item) => (

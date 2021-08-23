@@ -15,7 +15,7 @@ const MealItemForm = (props) => {
       +formQuantity > 5
     )
       return setAmountIsValid(false);
-    props.onAddItem(formQuantity);
+    props.onAddItem(+formQuantity);
   };
 
   const inputValueHandler = (event) => {
